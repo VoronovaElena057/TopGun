@@ -37,7 +37,7 @@ namespace ConsoleApplication1
 			
 			public override void Info()
 			{
-			 Console.WriteLine("Goalkeeper Name: {0}, skill:{1}",Name,skill);
+			 Console.WriteLine("Goalkeeper Name: {0,7}, skill:{1,5}",Name,skill);
 			}
         }
 
@@ -49,7 +49,7 @@ namespace ConsoleApplication1
 			
 			public override void Info()
 			{
-			 Console.WriteLine("Defender  Name: {0}, defence: {1}",Name,defence);
+			 Console.WriteLine("Defender  Name: {0,7}, defence: {1,5}",Name,defence);
 			}
         }
 		
@@ -61,7 +61,7 @@ namespace ConsoleApplication1
 			
 			public override void Info()
 			{
-			 Console.WriteLine("Midfield  Name: {0}, speed: {1}",Name,speed);
+			 Console.WriteLine("Midfield  Name: {0,7}, speed: {1,5}",Name,speed);
 			}
         }
 		
@@ -73,7 +73,7 @@ namespace ConsoleApplication1
 			
 			public override void Info()
 			{
-			 Console.WriteLine("Forward  Name: {0}, attack: {1}",Name,attack);
+			 Console.WriteLine("Forward   Name: {0,7}, attack: {1,5}",Name,attack);
 			}
         }
 
@@ -118,32 +118,48 @@ namespace ConsoleApplication1
 				}
 			}
 			
+			public int Skills(TeamMember t)
+			{
+			 if(t is Goalkeeper)
+				 return ((Goalkeeper)t).skill;
+			 else if(t is Defender)
+				 return ((Defender)t).defence;
+			 else if(t is Midfield)	
+				 return ((Midfield)t).speed;
+			 else if(t is Forward)
+				 return ((Forward)t).attack;
+			 else return 0;	
+			}
+			
             public int AverageLuck()//метод вычисляет удачу команды
             {
                 int teamLuck = 0;
                 foreach(TeamMember s in spisok.Values)
                 {
-                    teamLuck = teamLuck + s.Luck;
+                    teamLuck = teamLuck + s.Luck+Skills(s);
                 }
                 return teamLuck/11 ; 
             }
 			
 		public  void Luck()
 		{
-		  Console.WriteLine("Average luck {0} of team {1} \n",this.AverageLuck(),this.TeamName);
-		  Console.WriteLine("Luck of each member of the {0} team:",this.TeamName);	
+		  Console.WriteLine("Average luck: {0} of team {1} \n",this.AverageLuck(),this.TeamName);
+		  Console.WriteLine("Team mamber|Number |  Name  |  Luck | Skill ");	
 		  foreach(string teamKey in this.spisok.Keys)
 		  {
-		   Console.WriteLine("Player number: {0,-3} luck: {1}",teamKey,this.spisok[teamKey].Luck);
+		   Console.WriteLine("{0,-11}|{1,4}   | {2,-6} |  {3,-3}  |  {4,3}  ", this.spisok[teamKey].GetType().Name,teamKey,this.spisok[teamKey].Name,
+							 this.spisok[teamKey].Luck,this.Skills(spisok[teamKey]));
 		  }
+		  Console.WriteLine("\n");	
 		}
 			
-			public void TeamInfo()
+			/*public void TeamInfo()
 			{
 				Console.WriteLine("Name of the football team: {0}", TeamName);
 			 foreach(TeamMember i in spisok.Values)
 				 i.Info();
-			}
+			    Console.WriteLine("\n");	
+			}*/
         }
 
        class Game
@@ -151,8 +167,8 @@ namespace ConsoleApplication1
 	    Team a;
 	    Team b;
 		public string yourBet;
-		//Message message;
-		//public event Message Bet;
+		public delegate void Message(bool b);  
+		public event Message mess;
 		   
 		   public Game(Team a, Team b)
 		   {
@@ -172,28 +188,30 @@ namespace ConsoleApplication1
 	
         public  void  GameWinner()//метод который определяет исход игры
         {
-            if (a.AverageLuck() > (b.AverageLuck()*1.1))
+            if (a.AverageLuck() > (b.AverageLuck()*1.01))
 			{
-               Console.WriteLine("Team \"{0}\" is winner \n",a.TeamName);
-				if(yourBet==a.TeamName)
-				Console.WriteLine("Your bet won!");
-				else
-				Console.WriteLine("Your bet lost(");	
+               Console.WriteLine("Team \"{0}\" is winner \n",a.TeamName);	
+				mess?.Invoke(yourBet==a.TeamName);	
 			}
-            else if ((a.AverageLuck()*1.1) < b.AverageLuck())
+            else if ((a.AverageLuck()*1.01) < b.AverageLuck())
 			{
                 Console.WriteLine("Team \"{0}\" is winner \n", b.TeamName);
-				if(yourBet==b.TeamName)
-				Console.WriteLine("Your bet won!");
-				else
-				Console.WriteLine("Your bet lost(");
+				mess?.Invoke(yourBet==b.TeamName);	
 			}
             else
                 Console.WriteLine("Skore is equal. \n");
 		}
+		   
+		   public void MesInfo(bool b)
+		   {  
+			   if(b)
+				Console.WriteLine("Your bet won!");
+			   else
+				Console.WriteLine("Your bet lost(");
+		   }
       }	
 		
-     // public delegate void Message(int bet);  
+     
 	
       public  static void Main(string[] args)
         { 
@@ -202,17 +220,13 @@ namespace ConsoleApplication1
             Team A = new Team("Arsenal",a);
 		    string [] namesA=new string[11]{"Vasja","Vova","Petja","Igor","Dima","Sasha","Misha","Vanja","Kolja","Vlad","Sergej"};
 		    A.addNames(namesA);
-		    //A.TeamInfo();
-            //A.Luck();
-		    //Console.WriteLine("");
 		    
 
             string[] b = new string[11] {"12", "14", "15", "2", "1", "7", "88", "11", "10", "8", "17" };
             Team B = new Team("Chelsea", b);
 		    string [] namesB=new string[11]{"Andrej","Jura","Lesha","Denis","Dima","Pasha","Slava","Nikita","Tima","Kostja","Gosha"};
-		    //B.TeamInfo();
-            //B.Luck();
-		    //Console.WriteLine("");
+		    B.addNames(namesB);
+		    
              
 		    Console.WriteLine("Two teams are playing today: \"Arsenal\" and \"Chelsea\" \nWhich team are you betting on?");
 		    Console.WriteLine("Enter nuumber 1 or 2: \n 1)\"Arsenal\"  \n 2)\"Chelsea\" ");
@@ -220,8 +234,14 @@ namespace ConsoleApplication1
 		    
 		    Game G=new Game(A,B);
 		    G.YourBet(bet);
+		    G.mess+=G.MesInfo;
             G.GameWinner();
-		    
+		   
+		  Console.WriteLine("\n \n");
+		  //A.TeamInfo();
+		  //B.TeamInfo();
+		  A.Luck();
+		  B.Luck();
         }
     }
 }

@@ -3,3 +3,8 @@ C:\Documents and Settings\Admin\Мои документы\Visual Studio 2008\Pro
 C:\Documents and Settings\Admin\Мои документы\Visual Studio 2008\Projects\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
 C:\Documents and Settings\Admin\Мои документы\Visual Studio 2008\Projects\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
 C:\Documents and Settings\Admin\Мои документы\Visual Studio 2008\Projects\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Documents and Settings\Admin\Рабочий стол\TopGun\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Documents and Settings\Admin\Рабочий стол\TopGun\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Documents and Settings\Admin\Рабочий стол\TopGun\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Documents and Settings\Admin\Рабочий стол\TopGun\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Documents and Settings\Admin\Рабочий стол\TopGun\ConsoleApplication1\ConsoleApplication1\obj\Debug\ResolveAssemblyReference.cache

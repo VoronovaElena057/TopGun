@@ -5,11 +5,14 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
+
     class Game
     {
-        public Team a;
-        public Team b;
+        Team a;
+        Team b;
         public string yourBet;
+        public delegate void Message(bool b);
+        public event Message mess;
 
         public Game(Team a, Team b)
         {
@@ -27,27 +30,28 @@ namespace ConsoleApplication1
                 Console.WriteLine("You enter a wrong character. Your bet on this match will not be accepted.");
         }
 
-
         public void GameWinner()//метод который определяет исход игры
         {
-            if (a.AverageLuck() > b.AverageLuck())
-            {
-                Console.WriteLine("Team \"{0}\" is winner \n", a.TeamName);
-                if (yourBet == a.TeamName)
-                    Console.WriteLine("Your bet won!");
-                else
-                    Console.WriteLine("Your bet lost(");
-            }
-            else if (a.AverageLuck() < b.AverageLuck())
-            {
+            if (a.AverageLuck() > (b.AverageLuck()*1.01))
+			{
+               Console.WriteLine("Team \"{0}\" is winner \n",a.TeamName);	
+				mess(yourBet==a.TeamName);	
+			}
+            else if ((a.AverageLuck()*1.01) < b.AverageLuck())
+			{
                 Console.WriteLine("Team \"{0}\" is winner \n", b.TeamName);
-                if (yourBet == b.TeamName)
-                    Console.WriteLine("Your bet won!");
-                else
-                    Console.WriteLine("Your bet lost(");
-            }
+				mess(yourBet==b.TeamName);	
+			}
             else
                 Console.WriteLine("Skore is equal. \n");
+		}
+
+        public void MesInfo(bool b)
+        {
+            if (b)
+                Console.WriteLine("Your bet won!");
+            else
+                Console.WriteLine("Your bet lost(");
         }
-    }
+    }	
 }
