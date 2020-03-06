@@ -71,7 +71,7 @@ namespace ConsoleApplication1
         public void Luck()
         {
             Console.WriteLine("Average luck: {0} of team {1} \n", this.AverageLuck(), this.TeamName);
-            Console.WriteLine("Team mamber|Number |  Name  |  Luck | Skill ");
+            Console.WriteLine("Team member|Number |  Name  |  Luck | Skill ");
             foreach (string teamKey in this.spisok.Keys)
             {
                 Console.WriteLine("{0,-11}|{1,4}   | {2,-6} |  {3,-3}  |  {4,3}  ", this.spisok[teamKey].GetType().Name, teamKey, this.spisok[teamKey].Name,
