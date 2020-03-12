@@ -34,13 +34,13 @@ namespace ConsoleApplication1
         {
             if (a.AverageLuck() > (b.AverageLuck()*1.01))
 			{
-               Console.WriteLine("Team \"{0}\" is winner \n",a.TeamName);	
-				mess(yourBet==a.TeamName);	
+               Console.WriteLine("Team \"{0}\" is winner \n",a.TeamName);
+               mess(yourBet == a.TeamName);	//mess?.Invoke(yourBet==a.TeamName);-должно быть 
 			}
             else if ((a.AverageLuck()*1.01) < b.AverageLuck())
 			{
                 Console.WriteLine("Team \"{0}\" is winner \n", b.TeamName);
-				mess(yourBet==b.TeamName);	
+				mess(yourBet==b.TeamName);	//mess?.Invoke(yourBet==a.TeamName);-должно быть
 			}
             else
                 Console.WriteLine("Skore is equal. \n");
@@ -48,10 +48,16 @@ namespace ConsoleApplication1
 
         public void MesInfo(bool b)
         {
+            
             if (b)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Your bet won!");
+                Console.ResetColor();
+            }
             else
                 Console.WriteLine("Your bet lost(");
+            
         }
     }	
 }
