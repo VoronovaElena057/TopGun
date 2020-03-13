@@ -32,6 +32,12 @@ namespace ConsoleApplication2
              Console.WriteLine("Введите число:");
              int j = Convert.ToInt32(Console.ReadLine());
              int[] mas = new int[j];
+			 if(j==1)
+		      Console.WriteLine("Значение 1-го члена последовательности Фибоначи 0");
+		      else if(j==2)
+		      Console.WriteLine("Значение 2-го члена последовательности Фибоначи 1");
+		      else 
+			  {
              mas[0] = 0;
              mas[1] = 1;
              
@@ -40,6 +46,7 @@ namespace ConsoleApplication2
                  mas[i] = mas[i - 1] + mas[i - 2];
              }
              Console.WriteLine("Значение {0} члена последовательности Фибоначи: {1}",j,mas[j-1]);
+			  }
              Console.WriteLine("--------------\n");
              
 		   
